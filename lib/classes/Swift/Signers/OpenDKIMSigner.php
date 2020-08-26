@@ -58,8 +58,8 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         $this->dkimHandler->setMargin(78);
 
         if (!is_numeric($this->signatureTimestamp)) {
-            OpenDKIM::setOption(OpenDKIM::OPTS_FIXEDTIME, time());
-        } elseif (!OpenDKIM::setOption(OpenDKIM::OPTS_FIXEDTIME, $this->signatureTimestamp)) {
+            Swift_Signers_OpenDKIM::setOption(Swift_Signers_OpenDKIM::OPTS_FIXEDTIME, time());
+        } elseif (!Swift_Signers_OpenDKIM::setOption(Swift_Signers_OpenDKIM::OPTS_FIXEDTIME, $this->signatureTimestamp)) {
             throw new Swift_SwiftException('Unable to force signature timestamp ['.openssl_error_string().']');
         }
         if (isset($this->signerIdentity)) {
