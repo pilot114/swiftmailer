@@ -89,7 +89,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
         }
 
         $strlen = strlen($string);
-        $charPos = count($currentMap['p']);
+        $charPos = is_countable($currentMap['p']) ? count($currentMap['p']) : 0;
         $foundChars = 0;
         $invalid = false;
         for ($i = 0; $i < $strlen; ++$i) {

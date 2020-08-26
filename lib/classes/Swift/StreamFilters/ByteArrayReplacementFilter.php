@@ -84,7 +84,7 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
             }
             $this->replace[] = $rep;
         }
-        for ($i = count($this->replace) - 1; $i >= 0; --$i) {
+        for ($i = (is_countable($this->replace) ? count($this->replace) : 0) - 1; $i >= 0; --$i) {
             $this->replace[$i] = $rep = $this->filter($this->replace[$i], $i);
             $this->repSize[$i] = count($rep);
         }

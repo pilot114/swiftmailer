@@ -339,7 +339,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         $response = null;
 
         while ($this->pipeline) {
-            list($command, $seq, $codes, $address) = array_shift($this->pipeline);
+            [$command, $seq, $codes, $address] = array_shift($this->pipeline);
             $response = $this->getFullResponse($seq);
             try {
                 $this->assertResponseCode($response, $codes);
@@ -448,7 +448,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             $this->throwException(new Swift_TransportException('Expected response code '.implode('/', $wanted).' but got an empty response'));
         }
 
-        list($code) = sscanf($response, '%3d');
+        [$code] = sscanf($response, '%3d');
         $valid = (empty($wanted) || in_array($code, $wanted));
 
         if ($evt = $this->eventDispatcher->createResponseEvent($this, $response,
@@ -488,9 +488,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             try {
                 $this->doRcptToCommand($forwardPath);
                 ++$sent;
-            } catch (Swift_TransportException $e) {
-                $failedRecipients[] = $forwardPath;
-            } catch (Swift_AddressEncoderException $e) {
+            } catch (Swift_TransportException|Swift_AddressEncoderException $e) {
                 $failedRecipients[] = $forwardPath;
             }
         }
@@ -498,7 +496,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         if (0 != $sent) {
             $sent += count($failedRecipients);
             $this->doDataCommand($failedRecipients);
-            $sent -= count($failedRecipients);
+            $sent -= is_countable($failedRecipients) ? count($failedRecipients) : 0;
 
             $this->streamMessage($message);
         } else {

@@ -483,7 +483,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
      */
     public function getPriority()
     {
-        list($priority) = sscanf($this->getHeaderFieldModel('X-Priority'),
+        [$priority] = sscanf($this->getHeaderFieldModel('X-Priority'),
             '%[1-5]'
             );
 

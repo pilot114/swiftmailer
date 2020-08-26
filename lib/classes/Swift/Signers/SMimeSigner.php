@@ -423,7 +423,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     protected function streamToMime(Swift_OutputByteStream $fromStream, Swift_Message $message)
     {
         // Parse the stream into headers and body
-        list($headers, $messageStream) = $this->parseStream($fromStream);
+        [$headers, $messageStream] = $this->parseStream($fromStream);
 
         // Get the original message headers
         $messageHeaders = $message->getHeaders();

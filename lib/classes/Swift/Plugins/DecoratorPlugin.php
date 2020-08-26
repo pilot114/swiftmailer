@@ -121,7 +121,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
 
             $children = (array) $message->getChildren();
             foreach ($children as $child) {
-                list($type) = sscanf($child->getContentType(), '%[^/]/%s');
+                [$type] = sscanf($child->getContentType(), '%[^/]/%s');
                 if ('text' == $type) {
                     $body = $child->getBody();
                     $bodyReplaced = str_replace(

@@ -65,7 +65,7 @@ class Swift_CharacterReader_UsAsciiReader implements Swift_CharacterReader
     public function validateByteSequence($bytes, $size)
     {
         $byte = reset($bytes);
-        if (1 == count($bytes) && $byte >= 0x00 && $byte <= 0x7F) {
+        if (1 == (is_countable($bytes) ? count($bytes) : 0) && $byte >= 0x00 && $byte <= 0x7F) {
             return 0;
         }
 

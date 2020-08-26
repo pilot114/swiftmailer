@@ -212,7 +212,7 @@ class Swift_Message extends Swift_Mime_SimpleMessage
         $this->savedMessage = ['headers' => []];
         $this->savedMessage['body'] = $this->getBody();
         $this->savedMessage['children'] = $this->getChildren();
-        if (count($this->savedMessage['children']) > 0 && '' != $this->getBody()) {
+        if ((is_countable($this->savedMessage['children']) ? count($this->savedMessage['children']) : 0) > 0 && '' != $this->getBody()) {
             $this->setChildren(array_merge([$this->becomeMimePart()], $this->savedMessage['children']));
             $this->setBody('');
         }

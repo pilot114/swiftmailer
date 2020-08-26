@@ -27,7 +27,7 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
      */
     public function ping()
     {
-        $maxTransports = count($this->transports);
+        $maxTransports = is_countable($this->transports) ? count($this->transports) : 0;
         for ($i = 0; $i < $maxTransports
             && $transport = $this->getNextTransport(); ++$i) {
             if ($transport->ping()) {
@@ -37,7 +37,7 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
             }
         }
 
-        return count($this->transports) > 0;
+        return (is_countable($this->transports) ? count($this->transports) : 0) > 0;
     }
 
     /**
@@ -52,7 +52,7 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
      */
     public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
     {
-        $maxTransports = count($this->transports);
+        $maxTransports = is_countable($this->transports) ? count($this->transports) : 0;
         $sent = 0;
         $this->lastUsedTransport = null;
 
@@ -73,7 +73,7 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
             }
         }
 
-        if (0 == count($this->transports)) {
+        if (0 == (is_countable($this->transports) ? count($this->transports) : 0)) {
             throw new Swift_TransportException('All Transports in FailoverTransport failed, or no Transports available');
         }
 
