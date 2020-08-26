@@ -75,6 +75,7 @@ class Swift_MemorySpool implements Swift_Spool
      */
     public function flushQueue(Swift_Transport $transport, &$failedRecipients = null)
     {
+        $message = null;
         if ($this->messages === []) {
             return 0;
         }

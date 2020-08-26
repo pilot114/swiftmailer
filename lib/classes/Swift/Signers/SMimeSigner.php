@@ -466,6 +466,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      */
     protected function parseStream(Swift_OutputByteStream $emailStream)
     {
+        $headersPosEnd = null;
         $bufferLength = 78;
         $headerData = '';
         $headerBodySeparator = "\r\n\r\n";
