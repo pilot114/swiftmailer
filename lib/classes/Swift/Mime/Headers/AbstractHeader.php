@@ -66,7 +66,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     public function setCharset($charset)
     {
-        $this->clearCachedValueIf($charset != $this->charset);
+        $this->clearCachedValueIf($charset !== $this->charset);
         $this->charset = $charset;
         if (isset($this->encoder)) {
             $this->encoder->charsetChanged($charset);
@@ -93,7 +93,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     public function setLanguage($lang)
     {
-        $this->clearCachedValueIf($this->lang != $lang);
+        $this->clearCachedValueIf($this->lang !== $lang);
         $this->lang = $lang;
     }
 
@@ -143,7 +143,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     public function setMaxLineLength($lineLength)
     {
-        $this->clearCachedValueIf($this->lineLength != $lineLength);
+        $this->clearCachedValueIf($this->lineLength !== $lineLength);
         $this->lineLength = $lineLength;
     }
 
@@ -213,13 +213,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                 $phraseStr = $this->escapeSpecials($phraseStr, ['"']);
                 $phraseStr = '"'.$phraseStr.'"';
             } else {
-                // ... otherwise it needs encoding
-                // Determine space remaining on line if first line
-                if ($shorten) {
-                    $usedLength = strlen($header->getFieldName().': ');
-                } else {
-                    $usedLength = 0;
-                }
+                $usedLength = $shorten ? strlen($header->getFieldName().': ') : 0;
                 $phraseStr = $this->encodeWords($header, $string, $usedLength);
             }
         }
@@ -320,7 +314,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                 $tokens[] = $token;
             }
         }
-        if (strlen($encodedToken)) {
+        if (strlen($encodedToken) !== 0) {
             $tokens[] = $encodedToken;
         }
 
@@ -431,9 +425,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         // Generate atoms; split at all invisible boundaries followed by WSP
         foreach (preg_split('~(?=[ \t])~', $string) as $token) {
             $newTokens = $this->generateTokenLines($token);
-            foreach ($newTokens as $newToken) {
-                $tokens[] = $newToken;
-            }
+            $tokens = $newTokens;
         }
 
         return $tokens;

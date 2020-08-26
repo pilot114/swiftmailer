@@ -118,11 +118,9 @@ function generateUpToDateMimeArray()
                 $mime_type = $matches[1][$i];
 
                 // check if string length lower than 10
-                if (strlen($extension) < 10) {
-                    if (!isset($valid_mime_types[$mime_type])) {
-                        // generate array for mimetype to extension resolver (only first match)
-                        $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
-                    }
+                if (strlen($extension) < 10 && !isset($valid_mime_types[$mime_type])) {
+                    // generate array for mimetype to extension resolver (only first match)
+                    $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
                 }
             }
         }

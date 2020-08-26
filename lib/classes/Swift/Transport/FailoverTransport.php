@@ -69,7 +69,7 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
                     $transport->start();
                 }
 
-                if ($sent = $transport->send($message, $failedRecipients)) {
+                if (($sent = $transport->send($message, $failedRecipients)) !== 0) {
                     $this->lastUsedTransport = $transport;
 
                     return $sent;

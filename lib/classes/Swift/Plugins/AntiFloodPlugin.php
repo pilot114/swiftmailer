@@ -113,7 +113,7 @@ class Swift_Plugins_AntiFloodPlugin implements Swift_Events_SendListener, Swift_
         if ($this->counter >= $this->threshold) {
             $transport = $evt->getTransport();
             $transport->stop();
-            if ($this->sleep) {
+            if ($this->sleep !== 0) {
                 $this->sleep($this->sleep);
             }
             $transport->start();

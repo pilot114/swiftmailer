@@ -169,7 +169,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
     protected function fixHeaders()
     {
         parent::fixHeaders();
-        if (count($this->getChildren())) {
+        if (count($this->getChildren()) > 0) {
             $this->setHeaderParameter('Content-Type', 'charset', null);
             $this->setHeaderParameter('Content-Type', 'format', null);
             $this->setHeaderParameter('Content-Type', 'delsp', null);

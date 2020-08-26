@@ -189,10 +189,8 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_CharsetObserver
 
                 return array_shift($values);
             }
-        } else {
-            if ($this->has($name, $index)) {
-                return $this->headers[$name][$index];
-            }
+        } elseif ($this->has($name, $index)) {
+            return $this->headers[$name][$index];
         }
     }
 
@@ -231,7 +229,9 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_CharsetObserver
     {
         $headers = $this->headers;
         if ($this->canSort()) {
-            uksort($headers, [$this, 'sortHeaders']);
+            uksort($headers, function ($a, $b) {
+                return $this->sortHeaders($a, $b);
+            });
         }
 
         return array_keys($headers);
@@ -302,7 +302,9 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_CharsetObserver
         $string = '';
         $headers = $this->headers;
         if ($this->canSort()) {
-            uksort($headers, [$this, 'sortHeaders']);
+            uksort($headers, function ($a, $b) {
+                return $this->sortHeaders($a, $b);
+            });
         }
         foreach ($headers as $collection) {
             foreach ($collection as $header) {
@@ -351,8 +353,8 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_CharsetObserver
     {
         $lowerA = strtolower($a);
         $lowerB = strtolower($b);
-        $aPos = array_key_exists($lowerA, $this->order) ? $this->order[$lowerA] : -1;
-        $bPos = array_key_exists($lowerB, $this->order) ? $this->order[$lowerB] : -1;
+        $aPos = $this->order[$lowerA] ?? -1;
+        $bPos = $this->order[$lowerB] ?? -1;
 
         if (-1 === $aPos && -1 === $bPos) {
             // just be sure to be determinist here

@@ -167,7 +167,7 @@ class Swift_Transport_Esmtp_AuthHandler implements Swift_Transport_EsmtpHandler
      */
     public function afterEhlo(Swift_Transport_SmtpAgent $agent)
     {
-        if ($this->username) {
+        if ($this->username !== '') {
             $count = 0;
             $errors = [];
             foreach ($this->getAuthenticatorsForAgent() as $authenticator) {
@@ -253,12 +253,12 @@ class Swift_Transport_Esmtp_AuthHandler implements Swift_Transport_EsmtpHandler
      */
     protected function getAuthenticatorsForAgent()
     {
-        if (!$mode = strtolower($this->auth_mode)) {
+        if (($mode = strtolower($this->auth_mode)) === '') {
             return $this->authenticators;
         }
 
         foreach ($this->authenticators as $authenticator) {
-            if (strtolower($authenticator->getAuthKeyword()) == $mode) {
+            if (strtolower($authenticator->getAuthKeyword()) === $mode) {
                 return [$authenticator];
             }
         }

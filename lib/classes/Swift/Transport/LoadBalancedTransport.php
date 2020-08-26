@@ -136,7 +136,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
                 if (!$transport->isStarted()) {
                     $transport->start();
                 }
-                if ($sent = $transport->send($message, $failedRecipients)) {
+                if (($sent = $transport->send($message, $failedRecipients)) !== 0) {
                     $this->lastUsedTransport = $transport;
                     break;
                 }
@@ -169,7 +169,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      */
     protected function getNextTransport()
     {
-        if ($next = array_shift($this->transports)) {
+        if (($next = array_shift($this->transports)) !== null) {
             $this->transports[] = $next;
         }
 
@@ -181,7 +181,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      */
     protected function killCurrentTransport()
     {
-        if ($transport = array_pop($this->transports)) {
+        if (($transport = array_pop($this->transports)) !== null) {
             try {
                 $transport->stop();
             } catch (Exception $e) {

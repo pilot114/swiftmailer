@@ -84,7 +84,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
 
             $is->write($wrapped);
         }
-        if (strlen($leftOver)) {
+        if (strlen($leftOver) !== 0) {
             $is->write($leftOver);
         }
     }

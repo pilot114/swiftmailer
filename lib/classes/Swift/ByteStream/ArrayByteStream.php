@@ -76,7 +76,7 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
      */
     public function read($length)
     {
-        if ($this->offset == $this->arraySize) {
+        if ($this->offset === $this->arraySize) {
             return false;
         }
 

@@ -257,11 +257,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      */
     public function setCanon($canon)
     {
-        if ('nofws' == $canon) {
-            $this->canon = 'nofws';
-        } else {
-            $this->canon = 'simple';
-        }
+        $this->canon = 'nofws' == $canon ? 'nofws' : 'simple';
 
         return $this;
     }
@@ -350,14 +346,12 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
         $listHeaders = $headers->listAll();
         foreach ($listHeaders as $hName) {
             // Check if we need to ignore Header
-            if (!isset($this->ignoredHeaders[strtolower($hName)])) {
-                if ($headers->has($hName)) {
-                    $tmp = $headers->getAll($hName);
-                    foreach ($tmp as $header) {
-                        if ('' != $header->getFieldBody()) {
-                            $this->addHeader($header->toString());
-                            $this->signedHeaders[] = $header->getFieldName();
-                        }
+            if (!isset($this->ignoredHeaders[strtolower($hName)]) && $headers->has($hName)) {
+                $tmp = $headers->getAll($hName);
+                foreach ($tmp as $header) {
+                    if ('' != $header->getFieldBody()) {
+                        $this->addHeader($header->toString());
+                        $this->signedHeaders[] = $header->getFieldName();
                     }
                 }
             }

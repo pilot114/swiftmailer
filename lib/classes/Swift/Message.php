@@ -240,7 +240,7 @@ class Swift_Message extends Swift_Mime_SimpleMessage
         foreach ($this->savedMessage['headers'] as $name => $savedValue) {
             $headers = $this->getHeaders()->getAll($name);
 
-            foreach ($headers as $key => $value) {
+            foreach (array_keys($headers) as $key) {
                 if (!isset($savedValue[$key])) {
                     $this->getHeaders()->remove($name, $key);
                 }

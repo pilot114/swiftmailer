@@ -528,13 +528,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
      */
     protected function createByte($input, $bytes = 4, $isHex = true)
     {
-        if ($isHex) {
-            $byte = hex2bin(str_pad($input, $bytes * 2, '00'));
-        } else {
-            $byte = str_pad($input, $bytes, "\x00");
-        }
-
-        return $byte;
+        return $isHex ? hex2bin(str_pad($input, $bytes * 2, '00')) : str_pad($input, $bytes, "\x00");
     }
 
     /** ENCRYPTION ALGORITHMS */

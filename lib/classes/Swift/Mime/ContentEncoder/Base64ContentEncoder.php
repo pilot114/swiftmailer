@@ -40,11 +40,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoder extends Swift_Encoder_Base6
             $readBytes = $os->read(8192);
             $atEOF = (false === $readBytes);
 
-            if ($atEOF) {
-                $streamTheseBytes = $base64ReadBufferRemainderBytes;
-            } else {
-                $streamTheseBytes = $base64ReadBufferRemainderBytes.$readBytes;
-            }
+            $streamTheseBytes = $atEOF ? $base64ReadBufferRemainderBytes : $base64ReadBufferRemainderBytes.$readBytes;
             $base64ReadBufferRemainderBytes = null;
             $bytesLength = strlen($streamTheseBytes);
 

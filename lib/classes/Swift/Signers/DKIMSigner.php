@@ -315,11 +315,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     public function setBodyCanon($canon)
     {
-        if ('relaxed' == $canon) {
-            $this->bodyCanon = 'relaxed';
-        } else {
-            $this->bodyCanon = 'simple';
-        }
+        $this->bodyCanon = 'relaxed' == $canon ? 'relaxed' : 'simple';
 
         return $this;
     }
@@ -333,11 +329,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     public function setHeaderCanon($canon)
     {
-        if ('relaxed' == $canon) {
-            $this->headerCanon = 'relaxed';
-        } else {
-            $this->headerCanon = 'simple';
-        }
+        $this->headerCanon = 'relaxed' == $canon ? 'relaxed' : 'simple';
 
         return $this;
     }
@@ -486,14 +478,12 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
         $listHeaders = $headers->listAll();
         foreach ($listHeaders as $hName) {
             // Check if we need to ignore Header
-            if (!isset($this->ignoredHeaders[strtolower($hName)])) {
-                if ($headers->has($hName)) {
-                    $tmp = $headers->getAll($hName);
-                    foreach ($tmp as $header) {
-                        if ('' != $header->getFieldBody()) {
-                            $this->addHeader($header->toString());
-                            $this->signedHeaders[] = $header->getFieldName();
-                        }
+            if (!isset($this->ignoredHeaders[strtolower($hName)]) && $headers->has($hName)) {
+                $tmp = $headers->getAll($hName);
+                foreach ($tmp as $header) {
+                    if ('' != $header->getFieldBody()) {
+                        $this->addHeader($header->toString());
+                        $this->signedHeaders[] = $header->getFieldName();
                     }
                 }
             }

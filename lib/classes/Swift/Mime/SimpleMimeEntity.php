@@ -323,7 +323,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_CharsetObserver, Swift_M
             }
         }
 
-        if ($immediateChildren) {
+        if ($immediateChildren !== []) {
             $lowestLevel = $this->getNeededChildLevel($immediateChildren[0], $compoundLevel);
 
             // Determine which composite media type is needed to accommodate the
@@ -474,9 +474,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_CharsetObserver, Swift_M
     public function toString()
     {
         $string = $this->headers->toString();
-        $string .= $this->bodyToString();
 
-        return $string;
+        return $string . $this->bodyToString();
     }
 
     /**
@@ -537,29 +536,27 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_CharsetObserver, Swift_M
      */
     protected function bodyToByteStream(Swift_InputByteStream $is)
     {
-        if (empty($this->immediateChildren)) {
-            if (isset($this->body)) {
-                if ($this->cache->hasKey($this->cacheKey, 'body')) {
-                    $this->cache->exportToByteStream($this->cacheKey, 'body', $is);
+        if (empty($this->immediateChildren) && isset($this->body)) {
+            if ($this->cache->hasKey($this->cacheKey, 'body')) {
+                $this->cache->exportToByteStream($this->cacheKey, 'body', $is);
+            } else {
+                $cacheIs = $this->cache->getInputByteStream($this->cacheKey, 'body');
+                if ($cacheIs) {
+                    $is->bind($cacheIs);
+                }
+
+                $is->write("\r\n");
+
+                if ($this->body instanceof Swift_OutputByteStream) {
+                    $this->body->setReadPointer(0);
+
+                    $this->encoder->encodeByteStream($this->body, $is, 0, $this->getMaxLineLength());
                 } else {
-                    $cacheIs = $this->cache->getInputByteStream($this->cacheKey, 'body');
-                    if ($cacheIs) {
-                        $is->bind($cacheIs);
-                    }
+                    $is->write($this->encoder->encodeString($this->getBody(), 0, $this->getMaxLineLength()));
+                }
 
-                    $is->write("\r\n");
-
-                    if ($this->body instanceof Swift_OutputByteStream) {
-                        $this->body->setReadPointer(0);
-
-                        $this->encoder->encodeByteStream($this->body, $is, 0, $this->getMaxLineLength());
-                    } else {
-                        $is->write($this->encoder->encodeString($this->getBody(), 0, $this->getMaxLineLength()));
-                    }
-
-                    if ($cacheIs) {
-                        $is->unbind($cacheIs);
-                    }
+                if ($cacheIs) {
+                    $is->unbind($cacheIs);
                 }
             }
         }
@@ -634,7 +631,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_CharsetObserver, Swift_M
      */
     protected function fixHeaders()
     {
-        if (count($this->immediateChildren)) {
+        if (count($this->immediateChildren) > 0) {
             $this->setHeaderParameter('Content-Type', 'boundary',
                 $this->getBoundary()
                 );
@@ -778,7 +775,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_CharsetObserver, Swift_M
             $sorted = [];
             foreach ($this->immediateChildren as $child) {
                 $type = $child->getContentType();
-                $level = array_key_exists($type, $this->alternativePartOrder) ? $this->alternativePartOrder[$type] : max($this->alternativePartOrder) + 1;
+                $level = $this->alternativePartOrder[$type] ?? max($this->alternativePartOrder) + 1;
 
                 if (empty($sorted[$level])) {
                     $sorted[$level] = [];

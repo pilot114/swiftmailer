@@ -5,6 +5,7 @@
     "keywords": ["mail","mailer","email"],
     "homepage": "https://swiftmailer.symfony.com",
     "license": "MIT",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Chris Corbyn"
@@ -23,8 +24,16 @@
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
-        "symfony/phpunit-bridge": "^4.4|^5.0"
+        "symfony/phpunit-bridge": "^4.4|^5.0",
+        "rector/rector": "^0.7.65",
+        "pilot114/recombinator": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/pilot114/recombinator"
+        }
+    ],
     "suggest": {
         "ext-intl": "Needed to support internationalized email addresses"
     },

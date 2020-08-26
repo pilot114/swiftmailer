@@ -323,7 +323,7 @@ class Swift_DependencyContainer
     private function createNewInstance($itemName)
     {
         $reflector = new ReflectionClass($this->store[$itemName]['className']);
-        if ($reflector->getConstructor()) {
+        if ($reflector->getConstructor() !== null) {
             return $reflector->newInstanceArgs(
                 $this->createDependenciesFor($itemName)
                 );

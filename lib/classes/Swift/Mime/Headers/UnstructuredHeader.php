@@ -87,7 +87,7 @@ class Swift_Mime_Headers_UnstructuredHeader extends Swift_Mime_Headers_AbstractH
      */
     public function setValue($value)
     {
-        $this->clearCachedValueIf($this->value != $value);
+        $this->clearCachedValueIf($this->value !== $value);
         $this->value = $value;
     }
 
@@ -98,7 +98,7 @@ class Swift_Mime_Headers_UnstructuredHeader extends Swift_Mime_Headers_AbstractH
      */
     public function getFieldBody()
     {
-        if (!$this->getCachedValue()) {
+        if ($this->getCachedValue() === '') {
             $this->setCachedValue(
                 $this->encodeWords($this, $this->value)
                 );

@@ -128,24 +128,19 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
     {
         if (isset($this->connection)) {
             $this->connection->connect();
-        } else {
-            if (!isset($this->socket)) {
-                if (!$socket = fsockopen(
-                    $this->getHostString(), $this->port, $errno, $errstr, $this->timeout)) {
-                    throw new Swift_Plugins_Pop_Pop3Exception(sprintf('Failed to connect to POP3 host [%s]: %s', $this->host, $errstr));
-                }
-                $this->socket = $socket;
-
-                if (false === $greeting = fgets($this->socket)) {
-                    throw new Swift_Plugins_Pop_Pop3Exception(sprintf('Failed to connect to POP3 host [%s]', trim($greeting)));
-                }
-
-                $this->assertOk($greeting);
-
-                if ($this->username) {
-                    $this->command(sprintf("USER %s\r\n", $this->username));
-                    $this->command(sprintf("PASS %s\r\n", $this->password));
-                }
+        } elseif (!isset($this->socket)) {
+            if (!$socket = fsockopen(
+                $this->getHostString(), $this->port, $errno, $errstr, $this->timeout)) {
+                throw new Swift_Plugins_Pop_Pop3Exception(sprintf('Failed to connect to POP3 host [%s]: %s', $this->host, $errstr));
+            }
+            $this->socket = $socket;
+            if (false === $greeting = fgets($this->socket)) {
+                throw new Swift_Plugins_Pop_Pop3Exception(sprintf('Failed to connect to POP3 host [%s]', trim($greeting)));
+            }
+            $this->assertOk($greeting);
+            if ($this->username) {
+                $this->command(sprintf("USER %s\r\n", $this->username));
+                $this->command(sprintf("PASS %s\r\n", $this->password));
             }
         }
     }
@@ -171,10 +166,8 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
      */
     public function beforeTransportStarted(Swift_Events_TransportChangeEvent $evt)
     {
-        if (isset($this->transport)) {
-            if ($this->transport !== $evt->getTransport()) {
-                return;
-            }
+        if (isset($this->transport) && $this->transport !== $evt->getTransport()) {
+            return;
         }
 
         $this->connect();

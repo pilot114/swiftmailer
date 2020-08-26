@@ -64,10 +64,8 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
 
         if (!is_numeric($this->signatureTimestamp)) {
             OpenDKIM::setOption(OpenDKIM::OPTS_FIXEDTIME, time());
-        } else {
-            if (!OpenDKIM::setOption(OpenDKIM::OPTS_FIXEDTIME, $this->signatureTimestamp)) {
-                throw new Swift_SwiftException('Unable to force signature timestamp ['.openssl_error_string().']');
-            }
+        } elseif (!OpenDKIM::setOption(OpenDKIM::OPTS_FIXEDTIME, $this->signatureTimestamp)) {
+            throw new Swift_SwiftException('Unable to force signature timestamp ['.openssl_error_string().']');
         }
         if (isset($this->signerIdentity)) {
             $this->dkimHandler->setSigner($this->signerIdentity);
@@ -170,13 +168,11 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         if (!$this->peclLoaded) {
             return parent::canonicalizeBody($string);
         }
-        if (true === $this->dropFirstLF) {
-            if ("\r" == $string[0] && "\n" == $string[1]) {
-                $string = substr($string, 2);
-            }
+        if (true === $this->dropFirstLF && ("\r" == $string[0] && "\n" == $string[1])) {
+            $string = substr($string, 2);
         }
         $this->dropFirstLF = false;
-        if (strlen($string)) {
+        if (strlen($string) !== 0) {
             $this->dkimHandler->body($string);
         }
     }

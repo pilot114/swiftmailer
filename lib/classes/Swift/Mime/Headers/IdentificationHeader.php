@@ -157,7 +157,7 @@ class Swift_Mime_Headers_IdentificationHeader extends Swift_Mime_Headers_Abstrac
      */
     public function getFieldBody()
     {
-        if (!$this->getCachedValue()) {
+        if ($this->getCachedValue() === '') {
             $angleAddrs = [];
 
             foreach ($this->ids as $id) {

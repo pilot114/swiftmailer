@@ -219,7 +219,7 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
     public function clearAll($nsKey)
     {
         if (array_key_exists($nsKey, $this->keys)) {
-            foreach ($this->keys[$nsKey] as $itemKey => $null) {
+            foreach (array_keys($this->keys[$nsKey]) as $itemKey) {
                 $this->clearKey($nsKey, $itemKey);
             }
             if (is_dir($this->path.'/'.$nsKey)) {
@@ -282,7 +282,7 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      */
     public function __destruct()
     {
-        foreach ($this->keys as $nsKey => $null) {
+        foreach (array_keys($this->keys) as $nsKey) {
             $this->clearAll($nsKey);
         }
     }

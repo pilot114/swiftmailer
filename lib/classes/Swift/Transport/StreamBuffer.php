@@ -127,7 +127,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      */
     public function setWriteTranslations(array $replacements)
     {
-        foreach ($this->translations as $search => $replace) {
+        foreach (array_keys($this->translations) as $search) {
             if (!isset($replacements[$search])) {
                 $this->removeFilter($search);
                 unset($this->translations[$search]);
@@ -310,9 +310,8 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
                 if (!empty($this->params['protocol'])) {
                     $host = $this->params['protocol'].'://'.$host;
                 }
-                $host .= ':'.$this->params['port'];
 
-                return $host;
+                return $host . (':'.$this->params['port']);
                 break;
         }
     }
