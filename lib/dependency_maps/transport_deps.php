@@ -8,7 +8,7 @@ Swift_DependencyContainer::getInstance()
     ->asValue(!empty($_SERVER['SERVER_NAME']) && '' === preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $_SERVER['SERVER_NAME']) ? trim($_SERVER['SERVER_NAME'], '[]') : '127.0.0.1')
 
     ->register('transport.smtp')
-    ->asNewInstanceOf('Swift_Transport_EsmtpTransport')
+    ->asNewInstanceOf(\Swift_Transport_EsmtpTransport::class)
     ->withDependencies([
         'transport.buffer',
         'transport.smtphandlers',
@@ -18,7 +18,7 @@ Swift_DependencyContainer::getInstance()
     ])
 
     ->register('transport.sendmail')
-    ->asNewInstanceOf('Swift_Transport_SendmailTransport')
+    ->asNewInstanceOf(\Swift_Transport_SendmailTransport::class)
     ->withDependencies([
         'transport.buffer',
         'transport.eventdispatcher',
@@ -26,21 +26,21 @@ Swift_DependencyContainer::getInstance()
     ])
 
     ->register('transport.loadbalanced')
-    ->asNewInstanceOf('Swift_Transport_LoadBalancedTransport')
+    ->asNewInstanceOf(\Swift_Transport_LoadBalancedTransport::class)
 
     ->register('transport.failover')
-    ->asNewInstanceOf('Swift_Transport_FailoverTransport')
+    ->asNewInstanceOf(\Swift_Transport_FailoverTransport::class)
 
     ->register('transport.spool')
-    ->asNewInstanceOf('Swift_Transport_SpoolTransport')
+    ->asNewInstanceOf(\Swift_Transport_SpoolTransport::class)
     ->withDependencies(['transport.eventdispatcher'])
 
     ->register('transport.null')
-    ->asNewInstanceOf('Swift_Transport_NullTransport')
+    ->asNewInstanceOf(\Swift_Transport_NullTransport::class)
     ->withDependencies(['transport.eventdispatcher'])
 
     ->register('transport.buffer')
-    ->asNewInstanceOf('Swift_Transport_StreamBuffer')
+    ->asNewInstanceOf(\Swift_Transport_StreamBuffer::class)
     ->withDependencies(['transport.replacementfactory'])
 
     ->register('transport.smtphandlers')
@@ -48,7 +48,7 @@ Swift_DependencyContainer::getInstance()
     ->withDependencies(['transport.authhandler'])
 
     ->register('transport.authhandler')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_AuthHandler')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_AuthHandler::class)
     ->withDependencies(['transport.authhandlers'])
 
     ->register('transport.authhandlers')
@@ -62,36 +62,36 @@ Swift_DependencyContainer::getInstance()
     ])
 
     ->register('transport.smtputf8handler')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_SmtpUtf8Handler')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_SmtpUtf8Handler::class)
 
     ->register('transport.8bitmimehandler')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_EightBitMimeHandler')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_EightBitMimeHandler::class)
     ->addConstructorValue('8BITMIME')
 
     ->register('transport.crammd5auth')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_Auth_CramMd5Authenticator')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_Auth_CramMd5Authenticator::class)
 
     ->register('transport.loginauth')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_Auth_LoginAuthenticator')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_Auth_LoginAuthenticator::class)
 
     ->register('transport.plainauth')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_Auth_PlainAuthenticator')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_Auth_PlainAuthenticator::class)
 
     ->register('transport.xoauth2auth')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_Auth_XOAuth2Authenticator')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_Auth_XOAuth2Authenticator::class)
 
     ->register('transport.ntlmauth')
-    ->asNewInstanceOf('Swift_Transport_Esmtp_Auth_NTLMAuthenticator')
+    ->asNewInstanceOf(\Swift_Transport_Esmtp_Auth_NTLMAuthenticator::class)
 
     ->register('transport.eventdispatcher')
-    ->asNewInstanceOf('Swift_Events_SimpleEventDispatcher')
+    ->asNewInstanceOf(\Swift_Events_SimpleEventDispatcher::class)
 
     ->register('transport.replacementfactory')
-    ->asSharedInstanceOf('Swift_StreamFilters_StringReplacementFilterFactory')
+    ->asSharedInstanceOf(\Swift_StreamFilters_StringReplacementFilterFactory::class)
 
     ->register('address.idnaddressencoder')
-    ->asNewInstanceOf('Swift_AddressEncoder_IdnAddressEncoder')
+    ->asNewInstanceOf(\Swift_AddressEncoder_IdnAddressEncoder::class)
 
     ->register('address.utf8addressencoder')
-    ->asNewInstanceOf('Swift_AddressEncoder_Utf8AddressEncoder')
+    ->asNewInstanceOf(\Swift_AddressEncoder_Utf8AddressEncoder::class)
 ;

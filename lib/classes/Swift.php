@@ -68,6 +68,6 @@ abstract class Swift
         if (null !== $callable) {
             self::$inits[] = $callable;
         }
-        spl_autoload_register(['Swift', 'autoload']);
+        spl_autoload_register([\Swift::class, 'autoload']);
     }
 }

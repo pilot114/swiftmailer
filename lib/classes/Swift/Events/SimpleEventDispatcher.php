@@ -30,11 +30,11 @@ class Swift_Events_SimpleEventDispatcher implements Swift_Events_EventDispatcher
     public function __construct()
     {
         $this->eventMap = [
-            'Swift_Events_CommandEvent' => 'Swift_Events_CommandListener',
-            'Swift_Events_ResponseEvent' => 'Swift_Events_ResponseListener',
-            'Swift_Events_SendEvent' => 'Swift_Events_SendListener',
-            'Swift_Events_TransportChangeEvent' => 'Swift_Events_TransportChangeListener',
-            'Swift_Events_TransportExceptionEvent' => 'Swift_Events_TransportExceptionListener',
+            \Swift_Events_CommandEvent::class => \Swift_Events_CommandListener::class,
+            \Swift_Events_ResponseEvent::class => \Swift_Events_ResponseListener::class,
+            \Swift_Events_SendEvent::class => \Swift_Events_SendListener::class,
+            \Swift_Events_TransportChangeEvent::class => \Swift_Events_TransportChangeListener::class,
+            \Swift_Events_TransportExceptionEvent::class => \Swift_Events_TransportExceptionListener::class,
             ];
     }
 

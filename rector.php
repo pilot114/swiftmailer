@@ -10,6 +10,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::SETS, [
         SetList::CODE_QUALITY,
-        SetList::DEAD_CODE
+        SetList::DEAD_CODE,
+        SetList::PHP_55
     ]);
 };
