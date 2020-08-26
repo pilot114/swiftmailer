@@ -18,6 +18,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         SetList::PHP_55,
         SetList::PHP_56,
         SetList::PHP_70,
-        SetList::PHP_71
+        SetList::PHP_71,
+        SetList::PHP_72,
+        SetList::PHP_73
     ]);
 };

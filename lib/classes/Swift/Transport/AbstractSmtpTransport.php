@@ -417,12 +417,13 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         if (!empty($return)) {
             $path = $return;
         } elseif (!empty($sender)) {
-            // Don't use array_keys
-            reset($sender); // Reset Pointer to first pos
-            $path = key($sender); // Get key
+            // Reset Pointer to first pos
+            $path = array_key_first($sender);
+            // Get key
         } elseif (!empty($from)) {
-            reset($from); // Reset Pointer to first pos
-            $path = key($from); // Get key
+            // Reset Pointer to first pos
+            $path = array_key_first($from);
+            // Get key
         }
 
         return $path;
