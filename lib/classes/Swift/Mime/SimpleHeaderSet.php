@@ -27,9 +27,6 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_CharsetObserver
     /** List of fields which are required to be displayed */
     private $required = [];
 
-    /** The charset used by Headers */
-    private $charset;
-
     /**
      * Create a new SimpleHeaderSet with the given $factory.
      *
@@ -55,7 +52,6 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_CharsetObserver
      */
     public function setCharset($charset)
     {
-        $this->charset = $charset;
         $this->factory->charsetChanged($charset);
         $this->notifyHeadersOfCharset($charset);
     }

@@ -15,11 +15,8 @@
  */
 abstract class Swift
 {
-    const VERSION = '6.3.0';
-
     public static $initialized = false;
     public static $inits = [];
-
     /**
      * Registers an initializer callable that will be called the first time
      * a SwiftMailer class is autoloaded.
@@ -32,7 +29,6 @@ abstract class Swift
     {
         self::$inits[] = $callable;
     }
-
     /**
      * Internal autoloader for spl_autoload_register().
      *
@@ -60,7 +56,6 @@ abstract class Swift
             }
         }
     }
-
     /**
      * Configure autoloading using Swift Mailer.
      *

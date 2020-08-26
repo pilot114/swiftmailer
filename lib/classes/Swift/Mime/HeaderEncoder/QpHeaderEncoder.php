@@ -15,16 +15,6 @@
  */
 class Swift_Mime_HeaderEncoder_QpHeaderEncoder extends Swift_Encoder_QpEncoder implements Swift_Mime_HeaderEncoder
 {
-    /**
-     * Creates a new QpHeaderEncoder for the given CharacterStream.
-     *
-     * @param Swift_CharacterStream $charStream to use for reading characters
-     */
-    public function __construct(Swift_CharacterStream $charStream)
-    {
-        parent::__construct($charStream);
-    }
-
     protected function initSafeMap()
     {
         foreach (array_merge(
@@ -34,7 +24,6 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoder extends Swift_Encoder_QpEncoder i
             $this->safeMap[$byte] = chr($byte);
         }
     }
-
     /**
      * Get the name of this encoding scheme.
      *
@@ -46,7 +35,6 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoder extends Swift_Encoder_QpEncoder i
     {
         return 'Q';
     }
-
     /**
      * Takes an unencoded string and produces a QP encoded string from it.
      *

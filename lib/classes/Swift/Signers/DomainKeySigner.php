@@ -99,9 +99,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
 
     private $bodyCanonIgnoreStart = 2;
 
-    private $bodyCanonSpace = false;
-
-    private $bodyCanonLastChar = null;
+    private $bodyCanonLastChar;
 
     private $bodyCanonLine = '';
 
@@ -133,7 +131,6 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
         $this->bodyCanonIgnoreStart = 2;
         $this->bodyCanonEmptyCounter = 0;
         $this->bodyCanonLastChar = null;
-        $this->bodyCanonSpace = false;
 
         return $this;
     }
@@ -241,10 +238,9 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      *
      * @return $this
      */
-    public function setHashAlgorithm($hash)
+    public function setHashAlgorithm()
     {
         $this->hashAlgorithm = 'rsa-sha1';
-
         return $this;
     }
 
@@ -420,9 +416,6 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
                     break;
                 case "\n":
                     if ("\r" == $this->bodyCanonLastChar) {
-                        if ($nofws) {
-                            $this->bodyCanonSpace = false;
-                        }
                         if ('' == $this->bodyCanonLine) {
                             ++$this->bodyCanonEmptyCounter;
                         } else {
@@ -438,7 +431,6 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
                 case "\t":
                 case "\x09": //HTAB
                     if ($nofws) {
-                        $this->bodyCanonSpace = true;
                         break;
                     }
                     // no break

@@ -25,7 +25,7 @@ class Swift_KeyCache_SimpleKeyCacheInputStream implements Swift_KeyCache_KeyCach
     private $itemKey;
 
     /** A stream to write through on each write() */
-    private $writeThrough = null;
+    private $writeThrough;
 
     /**
      * Set the KeyCache to wrap.

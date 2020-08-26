@@ -302,7 +302,6 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         switch ($this->params['type']) {
             case self::TYPE_PROCESS:
                 return 'Process '.$this->params['command'];
-                break;
 
             case self::TYPE_SOCKET:
             default:
@@ -312,7 +311,6 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
                 }
 
                 return $host . (':'.$this->params['port']);
-                break;
         }
     }
 }

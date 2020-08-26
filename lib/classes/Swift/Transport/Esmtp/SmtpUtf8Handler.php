@@ -23,10 +23,6 @@
  */
 class Swift_Transport_Esmtp_SmtpUtf8Handler implements Swift_Transport_EsmtpHandler
 {
-    public function __construct()
-    {
-    }
-
     /**
      * Get the name of the ESMTP extension this handles.
      *
@@ -36,21 +32,18 @@ class Swift_Transport_Esmtp_SmtpUtf8Handler implements Swift_Transport_EsmtpHand
     {
         return 'SMTPUTF8';
     }
-
     /**
      * Not used.
      */
     public function setKeywordParams(array $parameters)
     {
     }
-
     /**
      * Not used.
      */
     public function afterEhlo(Swift_Transport_SmtpAgent $agent)
     {
     }
-
     /**
      * Get params which are appended to MAIL FROM:<>.
      *
@@ -60,7 +53,6 @@ class Swift_Transport_Esmtp_SmtpUtf8Handler implements Swift_Transport_EsmtpHand
     {
         return ['SMTPUTF8'];
     }
-
     /**
      * Not used.
      */
@@ -68,14 +60,12 @@ class Swift_Transport_Esmtp_SmtpUtf8Handler implements Swift_Transport_EsmtpHand
     {
         return [];
     }
-
     /**
      * Not used.
      */
     public function onCommand(Swift_Transport_SmtpAgent $agent, $command, $codes = [], &$failedRecipients = null, &$stop = false)
     {
     }
-
     /**
      * Returns +1, -1 or 0 according to the rules for usort().
      *
@@ -89,7 +79,6 @@ class Swift_Transport_Esmtp_SmtpUtf8Handler implements Swift_Transport_EsmtpHand
     {
         return 0;
     }
-
     /**
      * Not used.
      */
@@ -97,7 +86,6 @@ class Swift_Transport_Esmtp_SmtpUtf8Handler implements Swift_Transport_EsmtpHand
     {
         return [];
     }
-
     /**
      * Not used.
      */

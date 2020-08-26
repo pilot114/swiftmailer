@@ -57,7 +57,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      *
      * @var string
      */
-    private $cachedValue = null;
+    private $cachedValue;
 
     /**
      * Set the character set used in this Header.

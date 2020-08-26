@@ -159,7 +159,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
 
     private $bodyCanonSpace = false;
 
-    private $bodyCanonLastChar = null;
+    private $bodyCanonLastChar;
 
     private $bodyCanonLine = '';
 
@@ -230,8 +230,6 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     public function commit()
     {
-        // Nothing to do
-        return;
     }
 
     /**
@@ -244,8 +242,6 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
     {
         // Don't have to mirror anything
         $this->bound[] = $is;
-
-        return;
     }
 
     /**

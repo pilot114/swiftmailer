@@ -81,7 +81,6 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
                 break;
             default:
                 throw new Swift_SwiftException('Invalid mode ['.$mode.'] used to set nsKey='.$nsKey.', itemKey='.$itemKey);
-                break;
         }
         fwrite($fp, $string);
         $this->freeHandle($nsKey, $itemKey);
@@ -110,7 +109,6 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
                 break;
             default:
                 throw new Swift_SwiftException('Invalid mode ['.$mode.'] used to set nsKey='.$nsKey.', itemKey='.$itemKey);
-                break;
         }
         while (false !== $bytes = $os->read(8192)) {
             fwrite($fp, $bytes);

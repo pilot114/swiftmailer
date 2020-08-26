@@ -31,22 +31,13 @@ class Swift_DependencyContainer
     const TYPE_ARRAY = 0x10000;
 
     /** Singleton instance */
-    private static $instance = null;
+    private static $instance;
 
     /** The data container */
     private $store = [];
 
     /** The current endpoint in the data container */
     private $endPoint;
-
-    /**
-     * Constructor should not be used.
-     *
-     * Use {@link getInstance()} instead.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Returns a singleton of the DependencyContainer.

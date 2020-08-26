@@ -26,7 +26,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     protected $signOptions;
     protected $encryptOptions;
     protected $encryptCipher;
-    protected $extraCerts = null;
+    protected $extraCerts;
     protected $wrapFullMessage = false;
 
     /**

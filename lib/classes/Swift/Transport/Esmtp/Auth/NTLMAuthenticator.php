@@ -469,7 +469,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
         $length = $is16 ? $length / 2 : $length;
         $length = $this->createByte(str_pad(dechex($length), 2, '0', STR_PAD_LEFT), 2);
 
-        return $length.$length.$this->createByte(dechex($offset), 4);
+        return $length.$length.$this->createByte(dechex($offset));
     }
 
     /**

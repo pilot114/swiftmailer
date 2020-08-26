@@ -54,7 +54,7 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
             }
             $tree = &$this->tree;
             if (is_array($search_element)) {
-                foreach ($search_element as $k => $char) {
+                foreach ($search_element as $char) {
                     $this->index[$char] = true;
                     if (!isset($tree[$char])) {
                         $tree[$char] = [];
